@@ -1,0 +1,36 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# ML artifacts and datasets
+backend/ml/artifacts/*
+!backend/ml/artifacts/.gitkeep
+backend/ml/datasets/private/
+
+# Frontend
+node_modules/
+frontend/dist/
+frontend/coverage/
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
