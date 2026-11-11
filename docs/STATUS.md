@@ -4,25 +4,30 @@
 **Last updated:** 2026-11-12 by opencode (feat/phase-0-foundations)
 
 ## Done
-- Repository skeleton, Docker Compose placeholder, config placeholders, Alembic scaffolding,
-  first test slot, CI workflow placeholders, and an empty Vite app already exist.
 - Phase 0 foundations implemented on `feat/phase-0-foundations`:
   - `docs/STATUS.md` and ADR `0005-sync-db-in-routes`.
-  - Runtime/dev dependencies pinned via `uv`; `[dependency-groups].dev` added; `mypy` configured.
+  - Dev dependencies moved to `[dependency-groups].dev`; `mypy` (strict, pydantic plugin) and
+    ruff isort config added; `uv.lock` committed.
   - Minimal router-based API: `GET /api/v1/health` returns `{"status": "ok"}`.
-  - Settings via `pydantic-settings` v2 with a cached `get_settings()`.
-  - Database foundation: `DeclarativeBase`, session factory, `get_db` dependency, Alembic wired to settings.
-  - `docker-compose.yml` for Postgres, Redis, and object storage.
-  - OpenAPI export script, `contracts/openapi.json`, and a `Makefile`.
-  - uv-based backend CI and frontend CI.
+  - Settings via `pydantic-settings` v2 with a cached `get_settings()`; `.env.example` documents
+    the nine variables and the root `.env` is resolved from the config file location.
+  - Database foundation: `DeclarativeBase`, session factory, `get_db` dependency, and Alembic
+    reading the URL from settings (not the ini file).
+  - OpenAPI export script (`backend/scripts/export_openapi.py`), generated `contracts/openapi.json`,
+    a `Makefile`, and README local-development commands.
+  - uv-based backend CI (lint, types, tests) and Node 22 frontend CI; empty `ci.yml` removed.
+  - `.pre-commit-config.yaml` (ruff-check, ruff-format, gitleaks) and normalized formatting.
+- Not done: `docker-compose.yml` is still an empty placeholder (Task 0.6 deferred at the human's request).
 
 ## In progress (claimed by)
 - [ ] None.
 
 ## Next up (ordered)
-1. Human review of the Phase 0 diff and acceptance evidence.
-2. Mark Phase 0 complete in this file.
-3. Begin Phase 1 — data in (models, connectors, ingestion, profiling, workers, APIs).
+1. Author `docker-compose.yml` (Postgres 16, Redis 7, MinIO) with healthchecks, named volumes,
+   and loopback-bound ports; verify `docker compose config -q` (Task 0.6, deferred).
+2. Human review of the Phase 0 diff and acceptance evidence.
+3. Mark Phase 0 complete in this file.
+4. Begin Phase 1 — data in (models, connectors, ingestion, profiling, workers, APIs).
 
 ## Blockers / questions for the human
 - MinIO community images were removed from Docker Hub (~Sep 2026) and `quay.io` now requires
@@ -40,6 +45,8 @@
 - `frontend/src` still contains the Vite template (`App.tsx`, `App.css`, unused assets); cleanup
   is planned for Phase 2.
 - `frontend/tsconfig.app.json` does not enable `"strict": true`.
+- `pre-commit` is not in `[dependency-groups].dev`, so `.pre-commit-config.yaml` cannot be run
+  yet without installing it separately (adding it is a dependency change pending approval).
 
 ## Decisions pending
 - Object-storage image pinning strategy (see blockers).
