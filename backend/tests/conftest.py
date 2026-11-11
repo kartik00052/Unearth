@@ -8,9 +8,7 @@ application module imports the settings, so the suite can run without a local
 
 import os
 
-os.environ.setdefault(
-    "DATABASE_URL", "postgresql+psycopg://unearth:unearth@localhost:5432/unearth"
-)
+os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://unearth:unearth@localhost:5432/unearth")
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379/0")
 os.environ.setdefault("MINIO_ENDPOINT", "localhost:9000")
 os.environ.setdefault("MINIO_ACCESS_KEY", "test-access-key")
