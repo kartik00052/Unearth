@@ -1,30 +1,12 @@
 ﻿from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(
-    title="Unearth API",
-    description="Evidence-driven semantic discovery for AI agents.",
-    version="0.1.0",
-)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+from app.api.router import api_router
 
 
-@app.get("/api/v1/health", tags=["Health"])
-def health_check():
-    return {
-        "status": "healthy",
-        "service": "unearth-backend",
-        "version": "0.1.0",
-    }
+def create_app() -> FastAPI:
+    app = FastAPI(title="Unearth", version="0.1.0")
+    app.include_router(api_router)
+    return app
 
 
-@app.get("/", tags=["Root"])
-def root():
-    return {"message": "Welcome to Unearth API"}
+app = create_app()
