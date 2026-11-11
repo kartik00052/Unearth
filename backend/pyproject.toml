@@ -35,6 +35,7 @@ target-version = "py311"
 python_version = "3.12"
 strict = true
 files = ["app"]
+plugins = ["pydantic.mypy"]
 
 [dependency-groups]
 dev = [
